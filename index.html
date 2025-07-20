@@ -1,16 +1,93 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>so... i gotta tell u something</title>
+<link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  Hello world
-  <script src="script.js"></script>
-</body>
+<audio id="bgm" src="To The Bone .mp3" loop></audio>
 
+<div id="container">
+<img id="capoo" src="https://media.tenor.com/uQ80uJwfQPMAAAAm/bugcat-capoo.webpp" alt="capoo"/>
+<center><button id="startBtn">Start</button></center>
+<div class="card" id="msgBox" style="display:none;"></div>
+<div id="choice" style="display:none;">
+<button onclick="reply(true)">Yes</button>
+<button onclick="reply(false)">No</button>
+</div>
+<div id="result"></div>
+</div>
+
+<script>
+const musik = document.getElementById("bgm")
+const startBtn = document.getElementById("startBtn")
+const msgBox = document.getElementById("msgBox")
+const choiceEl = document.getElementById("choice")
+const resultEl = document.getElementById("result")
+const capooImg = document.getElementById("capoo")
+
+const messages = [
+"hey, been meanin’ to say smth...",
+"ik this might sound kinda outta nowhere",
+"but i’ve been thinkin abt u a lot lately",
+"like... fr, ur vibe’s diff.",
+"u got me smiling at my screen like an idiot 😅",
+"so imma just say it straight—",
+"i like u. like... a lot.",
+"been holding this in for a while tbh",
+"so... would u be my girl?"
+]
+
+let i = 0
+
+startBtn.onclick = () => {
+musik.play()
+startBtn.style.display = "none"
+msgBox.style.display = "block"
+typeNext()
+}
+
+function typeMessage(text, cb) {
+msgBox.textContent = ""
+let idx = 0
+const interval = setInterval(() => {
+msgBox.textContent += text[idx]
+idx++
+if (idx === text.length) {
+clearInterval(interval)
+if (cb) cb()
+}
+}, 30)
+}
+
+function typeNext() {
+if (i < messages.length) {
+if (i === messages.length - 9) {
+capooImg.src = "https://media.tenor.com/PTiUO4xaF5kAAAAm/bugcat-capoo.webp"
+} else if (i === messages.length - 1) {
+capooImg.src = "https://media.tenor.com/lx1XujTWX9MAAAAm/bugcat-capoo.webp"
+}
+typeMessage(messages[i], () => {
+i++
+setTimeout(typeNext, 1000)
+})
+} else {
+choiceEl.style.display = "flex"
+}
+}
+
+function reply(yes) {
+choiceEl.style.display = "none"
+if (yes) {
+capooImg.src = "https://media.tenor.com/VoiLHt8wusMAAAAm/capoo-blush.webp"
+resultEl.innerHTML = '<p>ayyy let’s gooo 😭💕</p>'
+setTimeout(() => window.open("whatsapp://send/?phone=6282170988479&text=yo%20i%20saw%20ur%20page...%20and%20yes&type=phone_number&app_absent=0", "_blank"), 2000)
+} else {
+resultEl.innerHTML = '<p>ouch... that’s fair tho. all good :)</p>'
+}
+}
+</script>
+</body>
 </html>
